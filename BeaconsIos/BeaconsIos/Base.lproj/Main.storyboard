@@ -25,11 +25,75 @@
                     </view>
                     <connections>
                         <outlet property="subjectPickerView" destination="bVl-xS-FRi" id="QFu-Gt-9ZR"/>
+                        <segue destination="o5b-X1-5AW" kind="show" identifier="ShowCompanySegue" id="hCT-2B-zee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="113"/>
+        </scene>
+        <!--Company View Controller-->
+        <scene sceneID="PhK-vp-WdI">
+            <objects>
+                <viewController id="o5b-X1-5AW" customClass="CompanyViewController" customModule="BeaconsIos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EGW-Mu-iqC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TvH-Nw-eHd">
+                                <rect key="frame" x="96" y="140" width="222" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.companywebsite.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZC-Qe-kHS">
+                                <rect key="frame" x="102.5" y="200" width="209" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cH-Sh-Aju">
+                                <rect key="frame" x="177.5" y="278" width="59" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jFX-ag-4Ql">
+                                <rect key="frame" x="20" y="395" width="374" height="315"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jFX-ag-4Ql" firstAttribute="centerX" secondItem="EGW-Mu-iqC" secondAttribute="centerX" id="ElZ-Yp-hwo"/>
+                            <constraint firstItem="jFX-ag-4Ql" firstAttribute="leading" secondItem="W1z-qI-5FV" secondAttribute="leading" constant="20" id="Hib-st-CTl"/>
+                            <constraint firstItem="eZC-Qe-kHS" firstAttribute="top" secondItem="TvH-Nw-eHd" secondAttribute="bottom" constant="21" id="MTY-tL-FmX"/>
+                            <constraint firstItem="W1z-qI-5FV" firstAttribute="bottom" secondItem="jFX-ag-4Ql" secondAttribute="bottom" constant="98" id="Nny-E5-leg"/>
+                            <constraint firstItem="W1z-qI-5FV" firstAttribute="trailing" secondItem="jFX-ag-4Ql" secondAttribute="trailing" constant="20" id="RxB-2z-2zy"/>
+                            <constraint firstItem="3cH-Sh-Aju" firstAttribute="centerX" secondItem="EGW-Mu-iqC" secondAttribute="centerX" id="Wvd-X5-Dvd"/>
+                            <constraint firstItem="TvH-Nw-eHd" firstAttribute="centerX" secondItem="EGW-Mu-iqC" secondAttribute="centerX" id="Xqp-7u-5Tz"/>
+                            <constraint firstItem="TvH-Nw-eHd" firstAttribute="top" secondItem="W1z-qI-5FV" secondAttribute="top" constant="140" id="c7M-vT-2DA"/>
+                            <constraint firstItem="jFX-ag-4Ql" firstAttribute="top" secondItem="3cH-Sh-Aju" secondAttribute="bottom" constant="96" id="lWy-0K-zMe"/>
+                            <constraint firstItem="3cH-Sh-Aju" firstAttribute="top" secondItem="eZC-Qe-kHS" secondAttribute="bottom" constant="57" id="rvt-gW-9eb"/>
+                            <constraint firstItem="eZC-Qe-kHS" firstAttribute="centerX" secondItem="EGW-Mu-iqC" secondAttribute="centerX" id="ydq-Xp-7UX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="W1z-qI-5FV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="m4N-ig-uD2"/>
+                    <connections>
+                        <outlet property="CompanyDescriptionTextView" destination="jFX-ag-4Ql" id="ILE-Nd-vEi"/>
+                        <outlet property="CompanyNameLabel" destination="TvH-Nw-eHd" id="avP-vD-lWQ"/>
+                        <outlet property="CompanySubjectLabel" destination="3cH-Sh-Aju" id="ZP8-Sr-8gR"/>
+                        <outlet property="CompanyWebsiteLabel" destination="eZC-Qe-kHS" id="vBB-Tb-7U7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yyu-BY-13y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="869.56521739130437" y="112.5"/>
         </scene>
     </scenes>
 </document>
