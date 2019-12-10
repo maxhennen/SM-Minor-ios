@@ -15,22 +15,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVl-xS-FRi">
-                                <rect key="frame" x="0.0" y="340" width="414" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVl-xS-FRi">
+                                <rect key="frame" x="47" y="584" width="320" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="btR-hg-7rk"/>
+                                </constraints>
                             </pickerView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K92-4V-ziM">
+                                <rect key="frame" x="20" y="74" width="374" height="445"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="86t-Dk-vtE"/>
+                                    <constraint firstAttribute="height" constant="445" id="bD4-F4-h11"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="bVl-xS-FRi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Cq-is-aVd"/>
+                            <constraint firstItem="K92-4V-ziM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g3p-dd-Etg"/>
+                            <constraint firstItem="bVl-xS-FRi" firstAttribute="top" secondItem="K92-4V-ziM" secondAttribute="bottom" constant="65" id="lJz-VM-sWn"/>
+                            <constraint firstItem="K92-4V-ziM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="pJK-Nq-vav"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bVl-xS-FRi" secondAttribute="bottom" constant="62" id="pth-Yt-5Fd"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="subjectPickerView" destination="bVl-xS-FRi" id="QFu-Gt-9ZR"/>
+                        <outlet property="table" destination="K92-4V-ziM" id="Uih-z1-3P5"/>
                         <segue destination="o5b-X1-5AW" kind="show" identifier="ShowCompanySegue" id="hCT-2B-zee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="113"/>
+            <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
         </scene>
         <!--Company View Controller-->
         <scene sceneID="PhK-vp-WdI">

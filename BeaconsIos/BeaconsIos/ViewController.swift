@@ -9,11 +9,16 @@
 import CoreLocation
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate {
+
+    
+    var items = ["company1", "company2", "company3"]
+    
     
     var locationManager: CLLocationManager!
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
+    @IBOutlet var table: UITableView!
     
     var subjects: [Subject] = []
     var currentCompany: Company? = nil
@@ -46,7 +51,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         subjectPickerView.dataSource = self
         subjectPickerView.delegate = self
         subjects = Subject.allCases
+        
+        self.table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.table.dataSource=self
+        self.table.delegate=self
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.table.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
+        cell.textLabel!.text = self.items[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    private func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        print("You tapped on cell # \(indexPath.row)")
+    }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
