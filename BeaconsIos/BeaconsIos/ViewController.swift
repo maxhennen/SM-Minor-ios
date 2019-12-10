@@ -16,6 +16,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     @IBOutlet weak var subjectPickerView: UIPickerView!
     
     var subjects: [Subject] = []
+    var currentCompany: Company? = nil
+    var companies: [Company] = []
+
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -65,17 +68,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            performSegue(withIdentifier: "showCompanySegue", sender: self)
-            
+            performSegue(withIdentifier: "ShowCompanySegue", sender: self)
         } else {
             print("unknown")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowCompanySegue" {
+            if let destinationVC = segue.destination as? CompanyViewController {
+                destinationVC.company = currentCompany
         }
     }
 
     func createMarket(){
         
-        var companies: [Company] = []
-        companies.append(Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
+        companies.append(Company(id: 12,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
         companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
         companies.append(Company(id: 3,name: "Mediaan", website: "https://mediaan.nl", subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
         companies.append(Company(id: 4,name: "Internetwerk", website: "https://internetwerk.nu", subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
@@ -84,4 +92,4 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
     }
 }
-
+}

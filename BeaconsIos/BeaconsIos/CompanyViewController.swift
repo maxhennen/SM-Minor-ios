@@ -15,15 +15,15 @@ class CompanyViewController: UIViewController {
     @IBOutlet var CompanySubjectLabel: UILabel!
     @IBOutlet var CompanyDescriptionTextView: UITextView!
     
-    var company = Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade")
+    var company: Company? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        CompanyNameLabel.text = company.name;
-        CompanyWebsiteLabel.text = company.website;
-        CompanySubjectLabel.text = company.subject.name;
-        CompanyDescriptionTextView.text = company.description;
+        CompanyNameLabel.text = company?.name;
+        CompanyWebsiteLabel.text = company?.website;
+        CompanySubjectLabel.text = company?.subject.name;
+        CompanyDescriptionTextView.text = company?.description;
     }
     
 
