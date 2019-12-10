@@ -88,10 +88,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         if segue.identifier == "ShowCompanySegue" {
             if let destinationVC = segue.destination as? CompanyViewController {
                 destinationVC.company = currentCompany
+            }
         }
     }
 
-    func createMarket(){
+    func createMarket() {
         
         companies.append(Company(id: 12,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
         companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
@@ -101,5 +102,4 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         _ = CompanyMarket(companies: companies)
 
     }
-}
 }
