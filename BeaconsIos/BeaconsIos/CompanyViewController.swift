@@ -15,7 +15,7 @@ class CompanyViewController: UIViewController {
     @IBOutlet var CompanySubjectLabel: UILabel!
     @IBOutlet var CompanyDescriptionTextView: UITextView!
     
-    var company : Company;
+    var company = Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade")
     
     override func viewDidLoad() {
         super.viewDidLoad()
