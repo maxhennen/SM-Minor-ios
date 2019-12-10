@@ -11,10 +11,6 @@ import UIKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    
-    var items = ["company1", "company2", "company3"]
-    
-    
     var locationManager: CLLocationManager!
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
@@ -40,12 +36,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(subjects[row])
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createMarket()
+
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -61,21 +58,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.table.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
-        cell.textLabel!.text = self.items[indexPath.row]
+        cell.textLabel!.text = self.showCompanies[indexPath.row].name
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return showCompanies.count
     }
     
-    private func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        print("You tapped on cell # \(indexPath.row)")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        currentCompany = showCompanies[indexPath.row]
+        performSegue(withIdentifier: "ShowCompanySegue", sender: self)
     }
-    
-    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+
         if status == .authorizedAlways {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
@@ -87,8 +84,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func startScanning() {
         let uuid = UUID(uuidString: "E584FBCB-829C-48B2-88CC-F7142B926AEA")!
-        let beaconRegion = CLBeaconRegion(uuid: uuid, major: 12, identifier: "MyBeacon")
-
+        let beaconRegion = CLBeaconRegion(uuid: uuid, identifier: "MyBeacon")
         locationManager.startMonitoring(for: beaconRegion)
         locationManager.startRangingBeacons(satisfying: beaconRegion.beaconIdentityConstraint)
     }
@@ -96,15 +92,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
             showCompanies.removeAll()
-            _ = beacons.map{
-                let beacon = $0
-                _ = companies.map{
-                    if $0.id == Int(truncating: beacon.minor){
-                        showCompanies.append($0)
+            for beacon in beacons {
+                for company in companies {
+                    if(beacon.minor.int16Value == company.id){
+                        showCompanies.append(company)
                     }
                 }
             }
-        } else {
+            
+            self.table.reloadData()
+        }
+        else {
             print("unknown")
         }
     }
@@ -113,6 +111,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         if segue.identifier == "ShowCompanySegue" {
             if let destinationVC = segue.destination as? CompanyViewController {
                 destinationVC.company = currentCompany
+            }
         }
     }
 
@@ -126,5 +125,4 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         _ = CompanyMarket(companies: companies)
 
     }
-}
 }
