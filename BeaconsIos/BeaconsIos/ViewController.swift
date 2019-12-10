@@ -15,7 +15,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
     
-    let subjects: [Subject] = Subject.AllCases()
+    var subjects: [Subject] = []
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -42,7 +42,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         
         subjectPickerView.dataSource = self
         subjectPickerView.delegate = self
-        print(subjects.count)
+        subjects = Subject.allCases
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -65,7 +65,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            print(beacons[0].proximity)
+            performSegue(withIdentifier: "showCompanySegue", sender: self)
+            
         } else {
             print("unknown")
         }

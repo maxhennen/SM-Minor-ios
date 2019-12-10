@@ -21,7 +21,6 @@ enum Subject: Int, SubjectName, CaseIterable{
         case .Media: return "Media"
         case .Technology: return "Technology"
         case .Business: return "Business"
-        default : return "null"
         }
     }
 }
