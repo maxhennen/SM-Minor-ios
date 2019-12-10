@@ -24,4 +24,5 @@ class Company {
         self.subject = subject
         self.description = description
     }
+    
 }
