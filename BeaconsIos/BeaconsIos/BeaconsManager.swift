@@ -1,31 +1,32 @@
 //
-//  ViewController.swift
+//  BeaconsManager.swift
 //  BeaconsIos
 //
 //  Created by Max Hennen on 10/12/2019.
 //  Copyright © 2019 Max Hennen. All rights reserved.
 //
 
+import Foundation
 import CoreLocation
-import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
-    
+class BeaconsManager: NSObject, CLLocationManagerDelegate {
+
     var locationManager: CLLocationManager!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        locationManager = CLLocationManager()
+    init(subject: Subject) {
+        super.init()
+        print("init")
+        locationManager = AppDelegate().locationManager
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        self.view.backgroundColor = .purple
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(status)
         if status == .authorizedAlways {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
+                    print("authorize")
                     startScanning()
                 }
             }
@@ -42,27 +43,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            updateDistance(beacons[0].proximity)
+            print(beacons[0].proximity)
         } else {
-            updateDistance(.unknown)
+            print("unknown")
         }
     }
-
-    func updateDistance(_ distance: CLProximity) {
-        UIView.animate(withDuration: 0.8) {
-            switch distance {
-            case .far:
-                self.view.backgroundColor = UIColor.blue
-            case .near:
-                self.view.backgroundColor = UIColor.orange
-            case .immediate:
-                self.view.backgroundColor = UIColor.red
-            default:
-                self.view.backgroundColor = UIColor.gray
-            }
-        }
-    }
-
+    
     func createMarket(){
         
         var companies: [Company] = []
@@ -75,4 +61,3 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     }
 }
-

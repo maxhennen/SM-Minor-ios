@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class CompanyMarket {
+    
+    var companies: [Company]
+    
+    init(companies: [Company]){
+        self.companies = companies
+    }
+}

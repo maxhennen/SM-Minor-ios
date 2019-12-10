@@ -7,8 +7,19 @@
 //
 
 import Foundation
+import CoreLocation
 
 class Company {
     
-
+    var name: String
+    var website: NSURL
+    var subject: Subject
+    var description: String
+    
+    init(name: String, website: NSURL, subject: Subject, description: String){
+        self.name = name
+        self.website = website
+        self.subject = subject
+        self.description = description
+    }
 }
