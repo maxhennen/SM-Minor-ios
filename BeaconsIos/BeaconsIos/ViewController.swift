@@ -23,6 +23,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     var subjects: [Subject] = []
     var currentCompany: Company? = nil
     var companies: [Company] = []
+    var showCompanies: [Company] = []
+
 
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -93,7 +95,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            performSegue(withIdentifier: "ShowCompanySegue", sender: self)
+            showCompanies.removeAll()
+            _ = beacons.map{
+                let beacon = $0
+                _ = companies.map{
+                    if $0.id == Int(truncating: beacon.minor){
+                        showCompanies.append($0)
+                    }
+                }
+            }
         } else {
             print("unknown")
         }
@@ -108,7 +118,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
     func createMarket(){
         
-        companies.append(Company(id: 12,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
+        companies.append(Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
         companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
         companies.append(Company(id: 3,name: "Mediaan", website: "https://mediaan.nl", subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
         companies.append(Company(id: 4,name: "Internetwerk", website: "https://internetwerk.nu", subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))

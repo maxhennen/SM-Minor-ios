@@ -13,7 +13,7 @@ protocol SubjectName {
 }
 
 enum Subject: Int, SubjectName, CaseIterable{
-    case Software = 1, Media, Technology, Business
+    case Software = 9, Media = 10, Technology = 11, Business = 12
 
     var name: String {
         switch self {
