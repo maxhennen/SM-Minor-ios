@@ -8,6 +8,20 @@
 
 import Foundation
 
-enum Subject: Int{
+protocol SubjectName {
+    var name: String { get }
+}
+
+enum Subject: Int, SubjectName, CaseIterable{
     case Software = 1, Media, Technology, Business
+
+    var name: String {
+        switch self {
+        case .Software: return "Software"
+        case .Media: return "Media"
+        case .Technology: return "Technology"
+        case .Business: return "Business"
+        default : return "null"
+        }
+    }
 }

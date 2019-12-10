@@ -15,7 +15,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
     
-    let subjects = 
+    let subjects = Subject.AllCases()
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return subjects[row].name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return subjects.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(subjects[row].name)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,10 +86,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     func createMarket(){
         
         var companies: [Company] = []
-        companies.append(Company(name: "Kembit", website: NSURL(fileURLWithPath: "https://kembit.nl"), subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
-        companies.append(Company(name: "Copaco", website: NSURL(fileURLWithPath: "https://Copaco.nl"), subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
-        companies.append(Company(name: "Mediaan", website: NSURL(fileURLWithPath: "https://mediaan.nl"), subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
-        companies.append(Company(name: "Internetwerk", website: NSURL(fileURLWithPath: "https://internetwerk.nu"), subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
+        companies.append(Company(id: 1,name: "Kembit", website: NSURL(fileURLWithPath: "https://kembit.nl"), subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
+        companies.append(Company(id: 2,name: "Copaco", website: NSURL(fileURLWithPath: "https://Copaco.nl"), subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
+        companies.append(Company(id: 3,name: "Mediaan", website: NSURL(fileURLWithPath: "https://mediaan.nl"), subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
+        companies.append(Company(id: 4,name: "Internetwerk", website: NSURL(fileURLWithPath: "https://internetwerk.nu"), subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
         
         _ = CompanyMarket(companies: companies)
 
