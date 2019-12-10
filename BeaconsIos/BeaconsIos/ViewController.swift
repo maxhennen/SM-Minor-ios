@@ -18,6 +18,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     var subjects: [Subject] = []
     var currentCompany: Company? = nil
     var companies: [Company] = []
+    var showCompanies: [Company] = []
+
 
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -68,7 +70,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            performSegue(withIdentifier: "ShowCompanySegue", sender: self)
+            showCompanies.removeAll()
+            _ = beacons.map{
+                let beacon = $0
+                _ = companies.map{
+                    if $0.id == Int(truncating: beacon.minor){
+                        showCompanies.append($0)
+                    }
+                }
+            }
         } else {
             print("unknown")
         }
