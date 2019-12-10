@@ -9,9 +9,13 @@
 import CoreLocation
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var locationManager: CLLocationManager!
+    
+    @IBOutlet weak var subjectPickerView: UIPickerView!
+    
+    let subjects = 
     
     override func viewDidLoad() {
         super.viewDidLoad()
