@@ -15,7 +15,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
     
-    let subjects = Subject.AllCases()
+    let subjects: [Subject] = Subject.AllCases()
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -30,7 +30,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(subjects[row].name)
+        print(subjects[row])
     }
     
     override func viewDidLoad() {
@@ -39,7 +39,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        self.view.backgroundColor = .purple
+        
+        subjectPickerView.dataSource = self
+        subjectPickerView.delegate = self
+        print(subjects.count)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -62,34 +65,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if beacons.count > 0 {
-            updateDistance(beacons[0].proximity)
+            print(beacons[0].proximity)
         } else {
-            updateDistance(.unknown)
-        }
-    }
-
-    func updateDistance(_ distance: CLProximity) {
-        UIView.animate(withDuration: 0.8) {
-            switch distance {
-            case .far:
-                self.view.backgroundColor = UIColor.blue
-            case .near:
-                self.view.backgroundColor = UIColor.orange
-            case .immediate:
-                self.view.backgroundColor = UIColor.red
-            default:
-                self.view.backgroundColor = UIColor.gray
-            }
+            print("unknown")
         }
     }
 
     func createMarket(){
         
         var companies: [Company] = []
-        companies.append(Company(id: 1,name: "Kembit", website: NSURL(fileURLWithPath: "https://kembit.nl"), subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
-        companies.append(Company(id: 2,name: "Copaco", website: NSURL(fileURLWithPath: "https://Copaco.nl"), subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
-        companies.append(Company(id: 3,name: "Mediaan", website: NSURL(fileURLWithPath: "https://mediaan.nl"), subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
-        companies.append(Company(id: 4,name: "Internetwerk", website: NSURL(fileURLWithPath: "https://internetwerk.nu"), subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
+        companies.append(Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
+        companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
+        companies.append(Company(id: 3,name: "Mediaan", website: "https://mediaan.nl", subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
+        companies.append(Company(id: 4,name: "Internetwerk", website: "https://internetwerk.nu", subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
         
         _ = CompanyMarket(companies: companies)
 

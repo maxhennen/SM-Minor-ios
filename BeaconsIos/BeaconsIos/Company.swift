@@ -13,11 +13,11 @@ class Company {
     
     var id: Int
     var name: String
-    var website: NSURL
+    var website: String
     var subject: Subject
     var description: String
     
-    init(id: Int, name: String, website: NSURL, subject: Subject, description: String){
+    init(id: Int, name: String, website: String, subject: Subject, description: String){
         self.id = id
         self.name = name
         self.website = website
