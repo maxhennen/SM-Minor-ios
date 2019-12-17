@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F733B6E239FAC3300513399 /* CompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F733B6D239FAC3300513399 /* CompanyViewController.swift */; };
+		E726F47B23A8D08B0078E514 /* BeaconsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E726F47A23A8D08B0078E514 /* BeaconsManager.swift */; };
 		E7D3CB8A239F8FDA0047BD75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D3CB89239F8FDA0047BD75 /* AppDelegate.swift */; };
 		E7D3CB8C239F8FDA0047BD75 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D3CB8B239F8FDA0047BD75 /* SceneDelegate.swift */; };
 		E7D3CB8E239F8FDA0047BD75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D3CB8D239F8FDA0047BD75 /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		3F733B6D239FAC3300513399 /* CompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewController.swift; sourceTree = "<group>"; };
+		E726F47A23A8D08B0078E514 /* BeaconsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconsManager.swift; sourceTree = "<group>"; };
 		E7D3CB86239F8FDA0047BD75 /* BeaconsIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaconsIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D3CB89239F8FDA0047BD75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7D3CB8B239F8FDA0047BD75 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				E7D3CB9F239F90780047BD75 /* Company.swift */,
 				E7D3CBA1239F90B60047BD75 /* CompanyMarket.swift */,
 				3F733B6D239FAC3300513399 /* CompanyViewController.swift */,
+				E726F47A23A8D08B0078E514 /* BeaconsManager.swift */,
 			);
 			path = BeaconsIos;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				E7D3CB8A239F8FDA0047BD75 /* AppDelegate.swift in Sources */,
 				E7D3CBA0239F90780047BD75 /* Company.swift in Sources */,
 				E7D3CB8C239F8FDA0047BD75 /* SceneDelegate.swift in Sources */,
+				E726F47B23A8D08B0078E514 /* BeaconsManager.swift in Sources */,
 				3F733B6E239FAC3300513399 /* CompanyViewController.swift in Sources */,
 				E7D3CBA2239F90B60047BD75 /* CompanyMarket.swift in Sources */,
 			);

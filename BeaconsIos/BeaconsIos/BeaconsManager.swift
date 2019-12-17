@@ -7,3 +7,64 @@
 //
 
 import Foundation
+import CoreLocation
+
+class BeaconsManager {
+    
+    var viewController: ViewController!
+    var locationManager: CLLocationManager!
+    
+    init(viewController: ViewController!){
+        self.viewController = viewController
+        locationManager = CLLocationManager()
+        locationManager.delegate = self.viewController
+        locationManager.requestAlwaysAuthorization()
+        
+        createMarket()
+    }
+    
+    func authorize(status: CLAuthorizationStatus){
+        if status == .authorizedAlways {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    startScanning()
+                }
+            }
+        }
+    }
+    
+    func startScanning(){
+        let uuid = UUID(uuidString: "E584FBCB-829C-48B2-88CC-F7142B926AEA")!
+        let beaconRegion = CLBeaconRegion(uuid: uuid, identifier: "MyBeacon")
+        locationManager.startMonitoring(for: beaconRegion)
+        locationManager.startRangingBeacons(satisfying: beaconRegion.beaconIdentityConstraint)
+    }
+    
+    func receiveBeacons(beacons: [CLBeacon]){
+        if beacons.count > 0 {
+            viewController.showCompanies.removeAll()
+            for beacon in beacons {
+                for company in viewController.companies {
+                    if(beacon.minor.int16Value == company.id){
+                        viewController.showCompanies.append(company)
+                    }
+                }
+            }
+        }
+        else {
+            print("unknown")
+        }
+        viewController.table.reloadData()
+    }
+    
+    func createMarket(){
+        
+        viewController.companies.append(Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
+        viewController.companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
+        viewController.companies.append(Company(id: 3,name: "Mediaan", website: "https://mediaan.nl", subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
+        viewController.companies.append(Company(id: 4,name: "Internetwerk", website: "https://internetwerk.nu", subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
+        
+        _ = CompanyMarket(companies: viewController.companies)
+
+    }
+}

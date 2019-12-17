@@ -1,3 +1,4 @@
+  
 //
 //  ViewController.swift
 //  BeaconsIos
@@ -5,13 +6,13 @@
 //  Created by Max Hennen on 10/12/2019.
 //  Copyright © 2019 Max Hennen. All rights reserved.
 //
-
 import CoreLocation
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController {
 
     var locationManager: CLLocationManager!
+    var beaconsManager: BeaconsManager!
     
     @IBOutlet weak var subjectPickerView: UIPickerView!
     @IBOutlet var table: UITableView!
@@ -20,32 +21,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     var currentCompany: Company? = nil
     var companies: [Company] = []
     var showCompanies: [Company] = []
-
-
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return subjects[row].name
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return subjects.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createMarket()
-
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        beaconsManager = BeaconsManager(viewController: self)
         
         subjectPickerView.dataSource = self
         subjectPickerView.delegate = self
@@ -55,6 +35,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         self.table.dataSource=self
         self.table.delegate=self
     }
+
+}
+
+  extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        beaconsManager.authorize(status: status)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+        beaconsManager.receiveBeacons(beacons: beacons)
+    }
+  }
+
+  extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.table.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
@@ -71,42 +65,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         performSegue(withIdentifier: "ShowCompanySegue", sender: self)
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-
-        if status == .authorizedAlways {
-            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
-                if CLLocationManager.isRangingAvailable() {
-                    startScanning()
-                }
-            }
-        }
-    }
-    
-    func startScanning() {
-        let uuid = UUID(uuidString: "E584FBCB-829C-48B2-88CC-F7142B926AEA")!
-        let beaconRegion = CLBeaconRegion(uuid: uuid, identifier: "MyBeacon")
-        locationManager.startMonitoring(for: beaconRegion)
-        locationManager.startRangingBeacons(satisfying: beaconRegion.beaconIdentityConstraint)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        if beacons.count > 0 {
-            showCompanies.removeAll()
-            for beacon in beacons {
-                for company in companies {
-                    if(beacon.minor.int16Value == company.id){
-                        showCompanies.append(company)
-                    }
-                }
-            }
-            
-            self.table.reloadData()
-        }
-        else {
-            print("unknown")
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowCompanySegue" {
             if let destinationVC = segue.destination as? CompanyViewController {
@@ -114,15 +72,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
             }
         }
     }
-
-    func createMarket(){
-        
-        companies.append(Company(id: 1,name: "Kembit", website: "https://kembit.nl", subject: Subject.Software, description: "Kembit is a company from Wijnandsrade"))
-        companies.append(Company(id: 2,name: "Copaco", website: "https://Copaco.nl", subject: Subject.Software, description: "Copaco is a company from Eindhoven"))
-        companies.append(Company(id: 3,name: "Mediaan", website: "https://mediaan.nl", subject: Subject.Software, description: "Mediaan is a company from Heerlen"))
-        companies.append(Company(id: 4,name: "Internetwerk", website: "https://internetwerk.nu", subject: Subject.Media, description: "Internetwerk is a company from Eindhoven"))
-        
-        _ = CompanyMarket(companies: companies)
-
+  }
+  
+  extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-}
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return subjects[row].name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return subjects.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    }
+  }
