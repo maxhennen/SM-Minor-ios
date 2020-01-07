@@ -13,6 +13,7 @@ class BeaconsManager {
     
     var viewController: ViewController!
     var locationManager: CLLocationManager!
+    var showCompanyViewcontroller = CompanyViewController()
     
     init(viewController: ViewController!){
         self.viewController = viewController
@@ -41,18 +42,21 @@ class BeaconsManager {
     }
     
     func receiveBeacons(beacons: [CLBeacon]){
+        viewController.showCompanies.removeAll()
         if beacons.count > 0 {
-            viewController.showCompanies.removeAll()
             for beacon in beacons {
                 for company in viewController.companies {
                     if(beacon.minor.int16Value == company.id){
                         viewController.showCompanies.append(company)
+                        if(beacon.accuracy <= 0.1 && viewController.currentCompany !== company){
+                            if(showCompanyViewcontroller.viewIfLoaded?.window == nil){
+                                viewController.currentCompany = company
+                                viewController.performSegue(withIdentifier: "ShowCompanySegue", sender: viewController)
+                            }
+                        }
                     }
                 }
             }
-        }
-        else {
-            print("unknown")
         }
         viewController.table.reloadData()
     }
